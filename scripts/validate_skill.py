@@ -47,6 +47,30 @@ n_ref = len(list((ROOT / "references").glob("*.md"))) if (ROOT / "references").i
 if n_ref < 8:
     errors.append(f"references/ berisi {n_ref} file (<8)")
 
+# --- evals/evals.json: JSON valid + skema minimum (cek struktur statis, bukan test runner) ---
+evals_path = ROOT / "evals" / "evals.json"
+if evals_path.is_file():
+    import json
+    try:
+        data = json.loads(evals_path.read_text(encoding="utf-8"))
+        cases = data.get("cases", [])
+        if len(cases) < 12:
+            errors.append(f"evals.json: {len(cases)} kasus (<12)")
+        ids = [c.get("id") for c in cases]
+        if len(ids) != len(set(ids)):
+            errors.append("evals.json: ID kasus tidak unik")
+        required = {"id", "title", "category", "purpose", "user_prompt", "setup",
+                    "expected_behaviors", "failure_conditions", "critical_failure",
+                    "evaluation_dimensions"}
+        for c in cases:
+            missing = required - set(c)
+            if missing:
+                errors.append(f"evals.json {c.get('id', '?')}: field hilang {sorted(missing)}")
+            if not c.get("expected_behaviors") or not c.get("failure_conditions"):
+                errors.append(f"evals.json {c.get('id', '?')}: expected_behaviors/failure_conditions kosong")
+    except ValueError as e:
+        errors.append(f"evals.json tidak valid sebagai JSON: {e}")
+
 if errors:
     print("VALIDASI GAGAL:")
     print("\n".join(f"- {e}" for e in errors))

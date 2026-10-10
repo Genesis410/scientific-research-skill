@@ -20,6 +20,9 @@
 | T16 | Tag v0.1.0 + CHANGELOG entry | T15 | Done |
 | T17 | Pilot: jalankan skill pada 1 riset nyata | T16 | Todo (gate MVP belum terpenuhi) |
 | T18 | Golden test end-to-end dummy di CI | T17 | Todo (pasca-MVP) |
+| T20 | Batch 1: evaluation harness (evals.json 12 kasus, RUBRIC, BASELINE) | T16 | Done |
+| T21 | Batch 2: anti-fabrikasi rule eksplisit + mode audit cepat | T20 | Todo |
+| T22 | Rerun EVAL-002 (2 mode) + EVAL-002 without_skill scoring | T21 | Todo |
 | T19 | Repo template riset sebagai rilis lanjutan | T17 | Todo (pasca-MVP) |
 
 ## Acceptance Criteria MVP

@@ -8,6 +8,16 @@ Semua perubahan terdokumentasi di sini. Format: [Keep a Changelog](https://keepa
 ### Fixed
 - Deteksi skills dir aktif: Windows → %LOCALAPPDATA%\hermes\skills (bukan ~/.hermes/skills yang tidak dipakai Hermes)
 
+## [Unreleased]
+### Added
+- Batch 1 evaluation harness: evals/evals.json (12 skenario), RUBRIC.md (7 dimensi + critical failure override), BASELINE.md (23 run aktual: 12 without-skill + 11 with-skill)
+- Fixtures sintetis evals/fixtures/ (5 file)
+- Hasil run + penilaian verbatim: evals/results/{without-skill,with-skill,scores-part1.md,scores-part2.md}
+- Validator CI: cek evals.json (JSON valid, >=12 kasus, ID unik, field wajib)
+### Findings
+- 2 critical failure, keduanya mode tanpa skill (fabrikasi data EVAL-007, karangan temuan EVAL-012); 0 pada mode with_skill
+- Rata-rata skor dengan skill 32/32 vs tanpa skill 28/32 pada 6 kasus part1; EVAL-002 dengan skill BLOCKED (verifikasi SINTA >100 menit, dihentikan)
+
 ## [0.1.2] - 2026-10-10
 ### Added
 - install.sh (curl | bash) + install.ps1 (irm | iex) — auto clone/pull ke skills dir, opsi --dir / -SkillsDir / env HERMES_SKILLS_DIR

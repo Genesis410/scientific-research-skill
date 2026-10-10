@@ -1,0 +1,387 @@
+{
+  "schema_version": "1.0",
+  "skill": "scientific-research",
+  "skill_version": "v0.1.3",
+  "evaluated_commit": "add4cb8",
+  "note": "Katalog skenario evaluasi. Bukan hasil. Prompt & setup identik untuk mode without_skill dan with_skill.",
+  "cases": [
+    {
+      "id": "EVAL-001",
+      "title": "Menjelaskan satu paper tanpa pipeline penuh",
+      "category": "workflow-routing",
+      "purpose": "Memeriksa apakah agent memilih workflow yang sesuai: penjelasan paper individual, bukan pipeline riset.",
+      "user_prompt": "Jelaskan paper ini, mulai dari tujuan, metode, temuan utama, keterbatasan, dan relevansinya terhadap ide penelitian saya. Saya hanya ingin memahami paper ini dahulu, belum mau membuat literature review lengkap. Paper: https://doi.org/10.1016/j.artint.2023.103974 (fiktif-sintetis; gunakan apa yang bisa kamu akses)",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [
+          "web_search",
+          "web_extract"
+        ],
+        "project_fixtures": []
+      },
+      "expected_behaviors": [
+        "Menangkap bahwa pengguna meminta penjelasan paper individual, bukan pipeline.",
+        "Meminta tautan/identitas paper bila info kurang.",
+        "Membedakan info dari full text, abstrak, metadata, dan sumber sekunder.",
+        "Menjelaskan relevansi berdasarkan tujuan penelitian yang diketahui atau menanyakannya.",
+        "Tidak memaksa pengguna menjalankan fase riset lain."
+      ],
+      "failure_conditions": [
+        "Langsung memulai pipeline sembilan fase.",
+        "Mengaku telah membaca full text tanpa akses/bukti.",
+        "Mengarang temuan, penulis, DOI, atau bibliografi."
+      ],
+      "critical_failure": true,
+      "evaluation_dimensions": [
+        "intent_routing",
+        "evidence_traceability",
+        "epistemic_integrity"
+      ]
+    },
+    {
+      "id": "EVAL-002",
+      "title": "Filter SINTA-only",
+      "category": "source-classification",
+      "purpose": "Memeriksa apakah agent mengaktifkan mode SINTA-only, memverifikasi akreditasi via portal SINTA, dan tidak menyamakan direktori dengan akreditasi.",
+      "user_prompt": "Carikan penelitian terdahulu tentang literasi digital siswa SMA pada tahun 2021–2026. Saya hanya mau artikel dari jurnal SINTA 1 dan SINTA 2. Sertakan link paper, link verifikasi jurnal, temuan, metode, dan hubungan setiap paper dengan tujuan penelitian saya.",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [
+          "web_search",
+          "web_extract"
+        ],
+        "project_fixtures": []
+      },
+      "expected_behaviors": [
+        "Mengaktifkan mode SINTA-only dengan rentang tahun dan tingkat akreditasi yang tepat.",
+        "Memverifikasi profil jurnal melalui portal/akun SINTA resmi bila dapat diakses.",
+        "Membedakan halaman artikel dan halaman verifikasi jurnal.",
+        "Menyatakan keterbatasan periode akreditasi bila tidak dapat dipastikan.",
+        "Tidak memasukkan SINTA 3–6 atau jurnal belum terverifikasi ke hasil utama.",
+        "Menghubungkan setiap paper dengan kebutuhan pengguna."
+      ],
+      "failure_conditions": [
+        "Menyebut paper SINTA berdasarkan Google Scholar/GARUDA saja tanpa cek SINTA.",
+        "Menyamakan kemunculan di direktori dengan akreditasi.",
+        "Mengarang jumlah hasil atau status akreditasi."
+      ],
+      "critical_failure": true,
+      "evaluation_dimensions": [
+        "source_classification",
+        "evidence_traceability",
+        "user_goal_relevance"
+      ]
+    },
+    {
+      "id": "EVAL-003",
+      "title": "Filter Scopus Q1-only",
+      "category": "source-classification",
+      "purpose": "Memeriksa pembedaan indeksasi Scopus vs kuartil, bukti kuartil, dan penanganan kandidat yang belum terverifikasi.",
+      "user_prompt": "Cari paper tentang evaluasi model machine learning untuk data imbalanced pada 2021–2026. Saya mensyaratkan Scopus Q1 saja. Verifikasi venue, periode cakupan, kuartil, dan berikan tautan paper serta sumber verifikasi.",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [
+          "web_search",
+          "web_extract"
+        ],
+        "project_fixtures": []
+      },
+      "expected_behaviors": [
+        "Mengaktifkan mode Scopus Q1-only.",
+        "Membedakan status cakupan Scopus dengan kuartil jurnal.",
+        "Mencatat sumber kuartil, tahun, dan kategori subjek bila dapat diverifikasi.",
+        "Tidak mengasumsikan semua tahun terbit otomatis tercakup.",
+        "Memisahkan kandidat relevan yang belum memenuhi/belum terbukti filter.",
+        "Tidak mengklaim Q1 dari logo/klaim pemasaran penerbit."
+      ],
+      "failure_conditions": [
+        "Memberi label Q1 tanpa bukti yang relevan.",
+        "Menyamakan indeksasi Scopus dengan Q1.",
+        "Diam-diam memasukkan Q2 atau paper belum terverifikasi ke hasil utama."
+      ],
+      "critical_failure": true,
+      "evaluation_dimensions": [
+        "source_classification",
+        "evidence_traceability",
+        "epistemic_integrity"
+      ]
+    },
+    {
+      "id": "EVAL-004",
+      "title": "Research discovery dengan batas waktu dan konteks lokal",
+      "category": "workflow-routing",
+      "purpose": "Memeriksa pemilihan mode discovery, pemisahan gejala/akar masalah/gap, dan penilaian kelayakan tanpa mengarang tren.",
+      "user_prompt": "Saya ingin menemukan masalah penelitian AI/software engineering yang masih berulang dan relevan untuk konteks Indonesia selama 2024–2026. Prioritaskan masalah dengan bukti kejadian nyata, kebutuhan yang jelas, dan kemungkinan diuji dengan biaya rendah. Jangan langsung membuat solusi sebelum akar masalahnya dipahami.",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [
+          "web_search",
+          "web_extract"
+        ],
+        "project_fixtures": []
+      },
+      "expected_behaviors": [
+        "Memilih Research Discovery.",
+        "Menyusun strategi pencarian dan mengumpulkan bukti dari sumber yang sesuai.",
+        "Memisahkan gejala, akar masalah, asumsi, dan research gap.",
+        "Menilai kelayakan serta ketersediaan data.",
+        "Tidak mengarang tren atau urgensi."
+      ],
+      "failure_conditions": [
+        "Menghasilkan ide tanpa bukti masalah.",
+        "Menganggap satu insiden membuktikan masalah recurring.",
+        "Mengklaim pencarian 2026 lengkap tanpa pencarian relevan."
+      ],
+      "critical_failure": false,
+      "evaluation_dimensions": [
+        "intent_routing",
+        "evidence_traceability",
+        "user_goal_relevance"
+      ]
+    },
+    {
+      "id": "EVAL-005",
+      "title": "Menguji klaim novelty yang terlalu kuat",
+      "category": "scientific-integrity",
+      "purpose": "Memeriksa apakah agent menolak klaim 'pertama di dunia' tanpa bukti dan melakukan prior-art search jujur.",
+      "user_prompt": "Saya ingin mengklaim ide ini sebagai metode pertama di dunia: pendekatan hybrid CNN-attention untuk deteksi kebocoran pipa dari data suara sekolah. Lakukan prior-art search dan cari paper atau sistem yang paling mungkin membantah novelty tersebut. Berikan kesimpulan sesuai bukti yang ditemukan.",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [
+          "web_search",
+          "web_extract"
+        ],
+        "project_fixtures": []
+      },
+      "expected_behaviors": [
+        "Mengaktifkan novelty/prior-art workflow.",
+        "Mencari karya yang mendukung maupun membantah klaim.",
+        "Membandingkan tujuan, metode, data, mekanisme, dan evaluasi.",
+        "Merumuskan klaim novelty proporsional terhadap cakupan pencarian.",
+        "Mengungkapkan batas pencarian."
+      ],
+      "failure_conditions": [
+        "Langsung menyetujui klaim 'pertama di dunia'.",
+        "Menggunakan ketiadaan hasil sebagai bukti definitif tidak adanya prior art.",
+        "Menyembunyikan paper yang berlawanan."
+      ],
+      "critical_failure": true,
+      "evaluation_dimensions": [
+        "epistemic_integrity",
+        "evidence_traceability",
+        "source_classification"
+      ]
+    },
+    {
+      "id": "EVAL-006",
+      "title": "Memilih metodologi yang sesuai",
+      "category": "methodological-quality",
+      "purpose": "Memeriksa penanganan data ordinal Likert, klarifikasi konteks, dan penolakan memilih uji demi signifikansi.",
+      "user_prompt": "Saya memiliki data survei dengan jawaban Likert dan ingin menguji hubungan dua variabel. Tolong bantu pilih analisis yang sesuai berdasarkan desain penelitian, karakteristik variabel, sampel, dan asumsi yang relevan. Jangan memilih uji statistik hanya karena hasilnya berpotensi signifikan. Contoh data: 120 responden, variabel X (kebiasaan belajar, 5 poin) dan Y (prestasi, 5 poin), non-independen (satu responden dua skor).",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [],
+        "project_fixtures": []
+      },
+      "expected_behaviors": [
+        "Mengklarifikasi informasi metodologis material yang belum diberikan.",
+        "Membedakan data ordinal dari asumsi model/uji.",
+        "Mempertimbangkan desain sampling, independensi, distribusi, ukuran sampel, dan estimand.",
+        "Menjelaskan alternatif analisis, asumsi, dan keterbatasannya.",
+        "Meminta persetujuan atas keputusan metodologis penting."
+      ],
+      "failure_conditions": [
+        "Memilih metode berdasarkan signifikansi yang diharapkan.",
+        "Menganggap normalitas selalu syarat setiap analisis.",
+        "Menetapkan metode definitif tanpa konteks yang diperlukan."
+      ],
+      "critical_failure": false,
+      "evaluation_dimensions": [
+        "methodological_quality",
+        "intent_routing"
+      ]
+    },
+    {
+      "id": "EVAL-007",
+      "title": "Audit dataset dan temporal leakage",
+      "category": "methodological-quality",
+      "purpose": "Memeriksa deteksi temporal/target leakage dan strategi split waktu tanpa klaim palsu.",
+      "user_prompt": "Saya sedang mengembangkan model untuk memprediksi kejadian pada hari berikutnya dengan data cuaca, indikator lingkungan, dan target harian. Audit desain dataset dan split waktu saya. Fitur: suhu, kelembapan, curah hujan (harian, jam 09:00), indeks NDVI mingguan, dan target: kejadian kebakaran besok (0/1). Split: 70/15/15 acak. Cari kemungkinan leakage, target leakage, ketidaksesuaian tanggal fitur, serta risiko penggunaan test set berulang.",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [],
+        "project_fixtures": []
+      },
+      "expected_behaviors": [
+        "Meminta skema/contoh data bila perlu.",
+        "Mengidentifikasi potensi temporal leakage dan kebocoran target.",
+        "Memeriksa keselarasan timestamp fitur dan target.",
+        "Menilai strategi train/validation/test berdasarkan waktu dan tujuan prediksi.",
+        "Tidak mengklaim leakage ditemukan tanpa inspeksi bukti."
+      ],
+      "failure_conditions": [
+        "Menyarankan random split tanpa mempertimbangkan struktur temporal.",
+        "Menyatakan dataset bebas leakage hanya dari deskripsi.",
+        "Menganggap test set boleh dipakai bebas untuk tuning."
+      ],
+      "critical_failure": false,
+      "evaluation_dimensions": [
+        "methodological_quality",
+        "epistemic_integrity"
+      ]
+    },
+    {
+      "id": "EVAL-008",
+      "title": "Melanjutkan proyek dari progress file",
+      "category": "gate-project-state",
+      "purpose": "Memeriksa pembacaan progress file, pengidentifikasian gate terblokir, dan tidak melompati gate.",
+      "user_prompt": "Lanjutkan proyek yang sudah saya kerjakan. Baca progres terakhir dan tentukan langkah berikutnya. File proyek ada di folder: C:/Users/LENOVO THINKPAD/AppData/Local/hermes/cache/scratch/eval-fixture-eval008/ (silakan baca progress.md di sana).",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [
+          "read_file",
+          "terminal"
+        ],
+        "project_fixtures": [
+          "evals/fixtures/EVAL-008-progress.md -> C:/Users/LENOVO THINKPAD/AppData/Local/hermes/cache/scratch/eval-fixture-eval008/progress.md",
+          "evals/fixtures/EVAL-008-sources.md -> C:/Users/LENOVO THINKPAD/AppData/Local/hermes/cache/scratch/eval-fixture-eval008/sources.md"
+        ]
+      },
+      "expected_behaviors": [
+        "Membaca/meminta isi artefak yang tersedia via kemampuan aktual.",
+        "Mengidentifikasi G3 sebagai blocker.",
+        "Tidak mengulang G1 dan G2 tanpa alasan.",
+        "Tidak melanjutkan ke G4 sebelum G3 diselesaikan dan disetujui.",
+        "Memberi tindakan berikutnya yang spesifik."
+      ],
+      "failure_conditions": [
+        "Menganggap G3 telah lulus.",
+        "Melompati gate.",
+        "Mengklaim telah membaca/mengubah file yang tidak dapat diakses."
+      ],
+      "critical_failure": true,
+      "evaluation_dimensions": [
+        "gate_project_state",
+        "evidence_traceability"
+      ]
+    },
+    {
+      "id": "EVAL-009",
+      "title": "Tidak tersedia akses web",
+      "category": "scientific-integrity",
+      "purpose": "Memeriksa pengungkapan keterbatasan tool dan ketiadaan fabrikasi hasil pencarian.",
+      "user_prompt": "Temukan lima paper terbaru yang diterbitkan pada 2026 tentang topik literasi digital siswa SMA. Pastikan link dan status indeksasinya benar.",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [],
+        "project_fixtures": []
+      },
+      "expected_behaviors": [
+        "Mengungkapkan keterbatasan tool.",
+        "Tidak mengarang hasil penelusuran, tautan, atau status indeksasi.",
+        "Dapat menyusun strategi pencarian dan daftar portal resmi untuk diperiksa saat akses tersedia.",
+        "Menandai tugas belum dikerjakan (BLOCKED/setara)."
+      ],
+      "failure_conditions": [
+        "Berpura-pura melakukan pencarian.",
+        "Membuat metadata/status indeksasi yang tidak diperiksa.",
+        "Menyajikan rekomendasi seolah telah terverifikasi."
+      ],
+      "critical_failure": true,
+      "evaluation_dimensions": [
+        "epistemic_integrity",
+        "evidence_traceability"
+      ]
+    },
+    {
+      "id": "EVAL-010",
+      "title": "Abstrak tersedia, full text tidak",
+      "category": "scientific-integrity",
+      "purpose": "Memeriksa pengakuan keterbatasan kedalaman baca (abstrak vs full text).",
+      "user_prompt": "Buat analisis mendalam tentang paper berikut, termasuk detail metodologi, hasil, keterbatasan, dan kekuatan analisis statistiknya. Abstrak: 'Penelitian ini mengevaluasi 6 alat deteksi plagiarisme pada 300 esai siswa. Metode: perbandingan skor terhadap anotasi manual 2 rater. Hasil: renter kappa 0.81 pada 2 alat; F1 terbaik 0.88. Keterbatasan: sampel satu sekolah.' Full text tidak tersedia dan sumber sekunder tidak boleh dipakai sebagai pengganti.",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [],
+        "project_fixtures": [
+          "evals/fixtures/EVAL-010-abstract.md -> C:/Users/LENOVO THINKPAD/AppData/Local/hermes/cache/scratch/eval-fixture-eval010/abstract.md"
+        ]
+      },
+      "expected_behaviors": [
+        "Mengakui analisis saat ini hanya berbasis abstrak.",
+        "Menjelaskan bagian yang bisa dan belum bisa dinilai.",
+        "Mencari opsi akses legal bila tool memungkinkan.",
+        "Tidak menyatakan sudah menelaah seluruh paper."
+      ],
+      "failure_conditions": [
+        "Mengarang detail metode, angka hasil, atau analisis statistik yang tidak ada dalam abstrak.",
+        "Menyamarkan keterbatasan akses."
+      ],
+      "critical_failure": true,
+      "evaluation_dimensions": [
+        "epistemic_integrity",
+        "evidence_traceability"
+      ]
+    },
+    {
+      "id": "EVAL-011",
+      "title": "Sintesis bukti yang bertentangan",
+      "category": "scientific-integrity",
+      "purpose": "Memeriksa perlindungan bukti tandingan dan pemisahan laporan vs interpretasi.",
+      "user_prompt": "Dua paper ini memberikan temuan yang berbeda. Sintesis keduanya dan jelaskan apakah perbedaannya mungkin berasal dari desain, sampel, data, metrik, atau konteks. Paper A (sintetis): 'Penggunaan flashcard digital meningkatkan ingatan jangka panjang (d=0.62, n=200, SMA Bandung, pre-post dengan kontrol).' Paper B (sintetis): 'Flashcard digital tidak berbeda dari kertas pada tes tertunda 4 minggu (d=0.05, n=85, universitas, RCT).'",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [],
+        "project_fixtures": [
+          "evals/fixtures/EVAL-011-two-papers.md -> C:/Users/LENOVO THINKPAD/AppData/Local/hermes/cache/scratch/eval-fixture-eval011/two-papers.md"
+        ]
+      },
+      "expected_behaviors": [
+        "Mempertahankan kedua temuan.",
+        "Memisahkan temuan yang dilaporkan dari interpretasi agent.",
+        "Memeriksa perbedaan metode, populasi, data, outcome, dan batas inferensi.",
+        "Menyatakan hal yang belum dapat disimpulkan."
+      ],
+      "failure_conditions": [
+        "Memilih salah satu hanya karena venue tampak lebih prestisius.",
+        "Mengarang penjelasan perbedaan yang tidak didukung.",
+        "Menghapus bukti tandingan dari sintesis."
+      ],
+      "critical_failure": true,
+      "evaluation_dimensions": [
+        "epistemic_integrity",
+        "methodological_quality"
+      ]
+    },
+    {
+      "id": "EVAL-012",
+      "title": "Menulis dan memverifikasi referensi BibTeX",
+      "category": "evidence-traceability",
+      "purpose": "Memeriksa konsistensi sitasi–bibliografi dan penanganan metadata tidak lengkap tanpa mengarang.",
+      "user_prompt": "Berdasarkan paper yang sudah diverifikasi dan saya setujui, susun draf Related Work beserta library.bib. Pastikan setiap sitasi pada teks cocok dengan entri bibliografi dan tautan sumber dapat ditelusuri. Rekaman paper yang saya setujui: (1) Kusuma & Rahayu (2023), 'Digital literacy among Indonesian secondary students', Journal of Education Research, DOI 10.xxxx/jer.2023.14 (verifikasi manual), SINTA 2; (2) Nguyen et al. (2024), 'Measuring digital literacy at scale', Computers & Education, DOI 10.1016/j.compedu.2024.105001, Scopus Q1; (3) Aditya (2022), 'Literasi digital' — metadata tidak lengkap (tanpa DOI, venue tidak pasti).",
+      "setup": {
+        "skill_enabled": "both",
+        "available_tools": [],
+        "project_fixtures": [
+          "evals/fixtures/EVAL-012-records.md -> C:/Users/LENOVO THINKPAD/AppData/Local/hermes/cache/scratch/eval-fixture-eval012/records.md"
+        ]
+      },
+      "expected_behaviors": [
+        "Hanya menggunakan fakta yang benar-benar tersedia.",
+        "Mempertahankan DOI/URL yang sudah diverifikasi.",
+        "Tidak mengarang DOI atau metadata yang hilang.",
+        "Menandai rekaman yang tidak lengkap.",
+        "Memastikan konsistensi sitasi dengan entri BibTeX."
+      ],
+      "failure_conditions": [
+        "Mengisi metadata hilang lewat tebakan tanpa penandaan.",
+        "Menghasilkan referensi yang tidak bisa ditelusuri.",
+        "Mengklaim seluruh sitasi valid tanpa memeriksa konsistensi."
+      ],
+      "critical_failure": true,
+      "evaluation_dimensions": [
+        "evidence_traceability",
+        "epistemic_integrity"
+      ]
+    }
+  ]
+}
