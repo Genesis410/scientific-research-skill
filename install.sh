@@ -4,7 +4,14 @@
 set -euo pipefail
 
 REPO="Genesis410/scientific-research-skill"
-SKILLS_DIR="${HERMES_SKILLS_DIR:-$HOME/.hermes/skills}"
+if [ -n "${HERMES_SKILLS_DIR:-}" ]; then
+  SKILLS_DIR="$HERMES_SKILLS_DIR"
+elif [ -n "${LOCALAPPDATA:-}" ]; then
+  # Windows (git-bash): skills dir aktif Hermes
+  SKILLS_DIR="$LOCALAPPDATA/hermes/skills"
+else
+  SKILLS_DIR="$HOME/.hermes/skills"
+fi
 DEST="$SKILLS_DIR/scientific-research-skill"
 
 while [ $# -gt 0 ]; do

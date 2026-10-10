@@ -31,7 +31,7 @@ curl -fsSL https://raw.githubusercontent.com/Genesis410/scientific-research-skil
 ```powershell
 irm https://raw.githubusercontent.com/Genesis410/scientific-research-skill/main/install.ps1 | iex
 ```
-Opsi `--dir <path>` (bash) / `-SkillsDir <path>` (PowerShell) untuk lokasi lain; env `HERMES_SKILLS_DIR` juga didukung.
+Opsi `--dir <path>` (bash) / `-SkillsDir <path>` (PowerShell) untuk lokasi lain; env `HERMES_SKILLS_DIR` juga didukung. Deteksi otomatis: Windows pakai `%LOCALAPPDATA%\hermes\skills` bila sudah berisi skill; selain itu `~/.hermes/skills`.
 
 **Manual — Hermes Agent (Windows / PowerShell):**
 ```powershell

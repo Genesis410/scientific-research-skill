@@ -1,7 +1,16 @@
 # Install scientific-research-skill ke skills dir Hermes (Windows).
 # Pakai (PowerShell):
 #   irm https://raw.githubusercontent.com/Genesis410/scientific-research-skill/main/install.ps1 | iex
-param([string]$SkillsDir = (Join-Path $env:USERPROFILE ".hermes\skills"))
+param([string]$SkillsDir)  # opsi: -SkillsDir <path>
+
+# Deteksi skills dir aktif bila -SkillsDir tidak diberikan
+if (-not $SkillsDir) {
+  $SkillsDir = if ((Test-Path "$env:LOCALAPPDATA\hermes\skills") -and (Get-ChildItem "$env:LOCALAPPDATA\hermes\skills" -ErrorAction SilentlyContinue)) {
+    Join-Path $env:LOCALAPPDATA "hermes\skills"
+  } else {
+    Join-Path $env:USERPROFILE ".hermes\skills"
+  }
+}
 
 $Repo = "https://github.com/Genesis410/scientific-research-skill.git"
 $Dest = Join-Path $SkillsDir "scientific-research-skill"

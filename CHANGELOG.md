@@ -4,6 +4,10 @@ Semua perubahan terdokumentasi di sini. Format: [Keep a Changelog](https://keepa
 
 > Status: **v0.1.0 = rilis awal/eksperimental**. Gate MVP (D027) terpenuhi hanya setelah pilot riset nyata selesai (T17). CI hijau = struktur valid, bukan bukti kualitas ilmiah.
 
+## [0.1.3] - 2026-10-10
+### Fixed
+- Deteksi skills dir aktif: Windows → %LOCALAPPDATA%\hermes\skills (bukan ~/.hermes/skills yang tidak dipakai Hermes)
+
 ## [0.1.2] - 2026-10-10
 ### Added
 - install.sh (curl | bash) + install.ps1 (irm | iex) — auto clone/pull ke skills dir, opsi --dir / -SkillsDir / env HERMES_SKILLS_DIR
