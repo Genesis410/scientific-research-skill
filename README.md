@@ -24,7 +24,16 @@ Satu skill (format [Agent Skills](https://www.anthropic.com/engineering/equippin
 | 8 | Kontinuitas proyek (tiap sesi) | — |
 
 ## Instalasi / Install
-**Hermes Agent (Windows / PowerShell):**
+**Instal cepat:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/Genesis410/scientific-research-skill/main/install.sh | bash
+```
+```powershell
+irm https://raw.githubusercontent.com/Genesis410/scientific-research-skill/main/install.ps1 | iex
+```
+Opsi `--dir <path>` (bash) / `-SkillsDir <path>` (PowerShell) untuk lokasi lain; env `HERMES_SKILLS_DIR` juga didukung.
+
+**Manual — Hermes Agent (Windows / PowerShell):**
 ```powershell
 git clone https://github.com/Genesis410/scientific-research-skill.git
 Copy-Item -Recurse scientific-research-skill "$env:USERPROFILE\.hermes\skills\scientific-research-skill"
