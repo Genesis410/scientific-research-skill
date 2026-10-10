@@ -12,7 +12,7 @@ Membangun pemetaan paper yang DIARAHKAN tujuan penelitian (bukan sekadar kata ku
 6. Bila muncul paper yang sangat mirip dengan ide pengguna: JANGAN menyimpulkan novelty/kegagalan sendiri — laporkan dan serahkan keputusan ke pengguna.
 
 ## QC Checklist (sebelum ajukan G1)
-- [ ] ≥10 paper terpetakan (kecuali bidang sangat niche — tuliskan alasannya)
+- [ ] Jumlah paper proporsional terhadap cakupan & kejenuhan bukti (bukan kuota kaku) — bila sedikit, tuliskan alasannya
 - [ ] Setiap baris sources.md punya tautan dan relevansi yang ditulis eksplisit
 - [ ] Query pencarian didokumentasikan (reproducibility)
 - [ ] Top 3 paper paling dekat dengan ide pengguna ditandai

@@ -3,6 +3,7 @@
 3 lapisan (D026):
 
 ## 1. CI otomatis (scripts/validate_skill.py, stdlib)
+CI = validasi teknis ringan (struktur + metadata + rujukan). **CI hijau BUKAN bukti kualitas ilmiah** — tidak menguji menu, klasifikasi audit, atau konsistensi progress. Jangan tafsirkan sebagai bukti skill berfungsi ilmiah.
 - SKILL.md ada + frontmatter valid (name, description)
 - name = scientific-research, description ≤60 char
 - Setiap file yang dirujuk di SKILL.md ada di disk
@@ -13,6 +14,12 @@ Setiap references/<fase>.md mengakhiri prosedur dengan checklist QC yang dijalan
 
 ## 3. Pilot riset nyata
 Uji dari pemilihan tujuan sampai tahap akhir relevan; dokumentasikan kegagalan di CHANGELOG/issues.
+
+## 2b. Pengujian fungsional berbasis skenario (manual/pilot)
+- Cari paper SINTA-only (mis. S1) → semua paper lolos akreditasi SINTA, tautan bukti ada
+- Cari paper Scopus Q1-only → periode cakupan mencakup tahun terbit
+- Jelaskan 1 paper → ringkasan + evaluasi tanpa pipeline
+- Continue project → progress.md terbaca, sesi lanjut dari fase terakhir
 
 Golden test end-to-end di CI: ditunda (perilaku agent & web bergantung lingkungan).
 

@@ -24,14 +24,22 @@ Satu skill (format [Agent Skills](https://www.anthropic.com/engineering/equippin
 | 8 | Kontinuitas proyek (tiap sesi) | — |
 
 ## Instalasi / Install
-**Hermes Agent:**
+**Hermes Agent (Windows / PowerShell):**
+```powershell
+git clone https://github.com/Genesis410/scientific-research-skill.git
+Copy-Item -Recurse scientific-research-skill "$env:USERPROFILE\.hermes\skills\scientific-research-skill"
+```
+Linux/macOS:
 ```bash
 git clone https://github.com/Genesis410/scientific-research-skill.git
-cp -r scientific-research-skill ~/.hermes/skills/   # sesuaikan skills dir profil kamu
+cp -r scientific-research-skill ~/.hermes/skills/
 ```
+Lokasi skills dir bisa berbeda per instalasi Hermes — sesuaikan (lihat config.yaml / `hermes skills`).
 **Agent lain (Claude Code, dll.):** salin folder ke direktori skill / skills-nya.
 
 Lalu gunakan `/scientific-research` atau sebut "riset ilmiah" dalam percakapan.
+
+**Kapabilitas yang dibutuhkan runtime:** tool pencarian web + ekstraksi konten halaman (mis. `web_search`/`web_extract`). Skill menyediakan fallback bila tidak ada — lihat SKILL.md bagian KAPABILITAS & FALLBACK.
 
 *For other agents: copy the folder into your agent's skills directory and reference `scientific-research`.*
 

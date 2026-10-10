@@ -18,7 +18,7 @@
 | T14 | GitHub Actions workflow | T13 | Done |
 | T15 | README + LICENSE + CHANGELOG + CONTRIBUTING | T01 | Done |
 | T16 | Tag v0.1.0 + CHANGELOG entry | T15 | Done |
-| T17 | Pilot: jalankan skill pada 1 riset nyata | T16 | Todo |
+| T17 | Pilot: jalankan skill pada 1 riset nyata | T16 | Todo (gate MVP belum terpenuhi) |
 | T18 | Golden test end-to-end dummy di CI | T17 | Todo (pasca-MVP) |
 | T19 | Repo template riset sebagai rilis lanjutan | T17 | Todo (pasca-MVP) |
 

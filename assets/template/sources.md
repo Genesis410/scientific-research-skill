@@ -1,21 +1,23 @@
 # Sources — <judul proyek>
 
+## Mode filter aktif
+<full audit | SINTA-only (min. S1) | Scopus-only | Q1-only | open-access-only | peer-reviewed-only>
+
 ## Matriks Paper
 
-| # | Judul | Penulis | Tahun | Venue | Metode | Temuan utama | Relevansi vs tujuan | Full text | Tautan | Status audit | Tanggal cek |
-|---|-------|---------|-------|-------|--------|--------------|---------------------|-----------|--------|--------------|-------------|
-| 1 | | | | | | | | | | belum terverifikasi | |
+| # | Judul | Penulis | Tahun | Venue | URL artikel | Full text legal | Metode | Temuan utama | Keterbatasan | Relevansi vs tujuan | Kedalaman baca | Peer review | SINTA | Scopus | OA/DOAJ | Crossref (DOI) | Tanggal cek |
+|---|-------|---------|-------|-------|-------------|-----------------|--------|--------------|--------------|---------------------|----------------|-------------|-------|--------|---------|----------------|-------------|
+| 1 | | | | | | | | | | | judul/abstrak/full | | | | | | |
 
-## Status audit
-Kolom "Status audit": `terverifikasi` / `belum terverifikasi` (+ alasan).
-Tautan verifikasi (SINTA / DOAJ / Crossref / Scopus Sources) dicatat di kolom Tautan atau catatan per venue di bawah.
+Kedalaman baca: `judul` / `abstrak` / `full`.
+Dimensi status: `ya` / `tidak` / `belum terverifikasi` (+ tautan bukti di bagian verifikasi venue).
 
-### Ringkasan venue
-| Venue | SINTA | DOAJ | Crossref | Scopus Sources | Status |
-|-------|-------|------|----------|----------------|--------|
+### Tautan bukti per venue
+| Venue | Tautan SINTA | Tautan Scopus Sources | Tautan DOAJ | Tautan Crossref | Halaman penerbit | Catatan |
+|-------|--------------|----------------------|-------------|-----------------|------------------|---------|
 
 ## Query pencarian (reproducibility)
-- <query 1> — <sumber: web_search> — <tanggal>
+- <query> — <sumber: GARUDA/Google Scholar/Scopus Sources/...> — <tanggal>
 
 ## Top paper terdekat dengan ide
 1. <judul + alasannya>

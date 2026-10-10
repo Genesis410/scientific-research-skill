@@ -3,6 +3,10 @@
 Skill induk: `scientific-research` (≤60 char description, Agent Skills frontmatter).
 Setiap fitur = satu fase. Gate = checkpoint persetujuan manusia sebelum fase berikutnya.
 
+## F0 — Mode Entry (menu interaktif)
+- Saat skill dipanggil tanpa tujuan eksplisit: tampilkan menu 11 mode (pipeline lengkap; discovery; literature review; novelty audit; SINTA/Scopus audit; methodology; dataset analysis; writing; critical review; jelaskan 1 paper; continue research).
+- Mode mandiri tanpa pipeline: tidak memaksa folder proyek; gate antarfase tidak berlaku kecuali pengguna minta lanjut berantai.
+
 ## F1 — Inisialisasi Proyek (tanpa gate)
 - User story: Peneliti menyebut topik/ide → agent membuat kerangka proyek riset lokal.
 - Input: topik, tujuan penelitian awal (bisa kasar).

@@ -30,3 +30,7 @@
 | D026 | Test | CI + QC per fase + pilot nyata | Confirmed |
 | D027 | Acceptance | CI hijau + gate pilot lulus | Confirmed |
 | D028 | Review | Manusia + agent sebelum rilis | Confirmed |
+| D029 | Entry | Mode menu interaktif, pipeline bukan default | Confirmed |
+| D030 | Audit sumber | Multidimensi + mode filter, bukan label tunggal | Confirmed |
+| D031 | v0.1.0 | Eksperimental sampai pilot T17 selesai | Confirmed |
+| D032 | Dokumen N/A | DATABASE/API/UI/DESIGN_SYSTEM dihapus | Confirmed |

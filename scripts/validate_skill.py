@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Validator struktur skill — stdlib only, dijalankan CI. (ADR-001)"""
+"""Validator struktur skill — stdlib only, dijalankan CI. (ADR-001)
+Validasi ringan: keberadaan file + metadata dasar via regex.
+BUKAN validasi sintaks YAML penuh — jangan ditafsirkan demikian."""
 import re, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -34,6 +36,12 @@ if not refs:
 for r in refs:
     if not (ROOT / r).is_file():
         errors.append(f"file dirujuk tidak ada: {r}")
+
+# rujukan internal yang dipakai file workflow (references/ dan assets/)
+for wf in sorted((ROOT / "references").glob("*.md")) + sorted((ROOT / "assets/template").glob("*.md")):
+    for r in sorted(set(re.findall(r"(?:references|assets)/[A-Za-z0-9_./-]+\.(?:md|bib)", wf.read_text(encoding="utf-8")))):
+        if not (ROOT / r).is_file():
+            errors.append(f"{wf.relative_to(ROOT)} merujuk file tidak ada: {r}")
 
 n_ref = len(list((ROOT / "references").glob("*.md"))) if (ROOT / "references").is_dir() else 0
 if n_ref < 8:
